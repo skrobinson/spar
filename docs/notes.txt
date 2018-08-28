@@ -1,0 +1,20 @@
+Development Environment
+-----------------------
+
+- Spar is a JQueryUI widget.
+- Testing is done with QUnit in a browser.
+
+
+Names
+-----
+
+Talc
+Gypsum
+Calcite
+Fluorite
+Apatite
+Orthoclase
+Quartz
+Topaz
+Corundum
+Diamond
