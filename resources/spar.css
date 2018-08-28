@@ -1,0 +1,40 @@
+/*
+    spar.css - Spar app CSS
+
+    Copyright 2018 by Scottsdale Community College
+    written by Sean Robinson <sean.robinson@scottsdalecc.edu>
+*/
+
+body {
+    background-color: #000000;
+    color: #FFFFFF;
+    font-size: calc(0.5em + 1vmin);
+    margin: 0px;
+    position: relative;
+    text-align: center;
+}
+
+/* User button font. */
+.button_font {
+    font-family: Courier;
+    font-weight: normal;
+    font-size: 10px;
+}
+
+/* Remaining rounds font. */
+.rounds_font {
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.status-block {
+    color: #00AA00;
+}
+
+/* Countdown timer very large font. */
+.timer_font {
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 20px;  /* Should vary with size. */
+}
