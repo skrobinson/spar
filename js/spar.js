@@ -73,6 +73,22 @@ $.widget('scottsdalecc.spar', {
         let currentRound = 0;
         // Save a partial function to return text for the progress bar.
         let updateLabel = remainderText(options.nrRounds);
+        // Create a countdown timer to measure time for each pair of questions.
+        timer = $('#timer').rounddown(
+                            $.extend(
+                                {seconds: options.interval,
+                                 onComplete: () => fate.notify(++currentRound) },
+                                options.timerOpts
+                            ));
+        // Start the timer to draw it on-screen, then immediately stop it.
+        timer.start();
+        timer.stop();
+        // Once things settle, resize the countdown to fit screen.
+        $.when(pause(10))
+            .then(() => [$('#timer').parent().innerHeight(),
+                         $('#timer').parent().innerWidth()])
+            .then(dims => Math.min.apply(null, dims))
+            .then(minDim => timer.radius(minDim / 2.2));
     }
 });
 
