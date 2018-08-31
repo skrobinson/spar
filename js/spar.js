@@ -25,6 +25,24 @@ function pause(delay) {
     return deferred.promise();
 }
 
+/* remainderText - return a function to make new label text
+ *
+ * Returns a closure over an arrow function.  Fun with ES6.
+ *
+ * @param {Integer} max - maximum number of rounds
+ * @returns {Function}
+ *
+ * The returned function accepts a round number and returns a string to
+ * use as a label in the rounds progressbar.
+ *
+ * @param {Integer} current - current round
+ * @returns {String}
+ */
+function remainderText(max) {
+    let labelEnd = ' rounds remaining';
+    return (current) => (max - current) + labelEnd;
+}
+
 $.widget('scottsdalecc.spar', {
     options: {
         interval: 60,  // seconds per round (i.e. one mineral)
