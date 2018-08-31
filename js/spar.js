@@ -120,6 +120,14 @@ $.widget('scottsdalecc.spar', {
         });
         // Set to begin at round 0.
         seriesLabel.text(updateLabel(0));
+        // Stop the timer for options.pause milliseconds after each round.
+        // The hidden pause gives time for students to physically pass samples.
+        fate.progress(() => $.when()
+                                .then($.fn.button.bind(controlButton, 'disable'))
+                                .then(timer.stop.bind(timer))
+                                .then(pause.bind(null, options.pause))
+                                .then($.fn.button.bind(controlButton, 'enable'))
+                                .then(timer.start.bind(timer)));
         // Signal the progress bar to move.
         fate.progress(index => seriesPBar.progressbar({ value: index }));
     }
