@@ -73,6 +73,7 @@ $.widget('scottsdalecc.spar', {
         let currentRound = 0;
         // Save a partial function to return text for the progress bar.
         let updateLabel = remainderText(options.nrRounds);
+        let seriesLabel = $('#rounds-counter > .progress-label');
         // Create a countdown timer to measure time for each pair of questions.
         timer = $('#timer').rounddown(
                             $.extend(
@@ -89,6 +90,17 @@ $.widget('scottsdalecc.spar', {
                          $('#timer').parent().innerWidth()])
             .then(dims => Math.min.apply(null, dims))
             .then(minDim => timer.radius(minDim / 2.2));
+        // Create a progress bar for the entrire exam length.
+        let seriesPBar = $('#rounds-counter').progressbar({
+            change: () => seriesLabel.text(updateLabel(currentRound)),
+            complete: () => fate.resolve(options.nrRounds),
+            max: options.nrRounds,
+            value: 0
+        });
+        // Set to begin at round 0.
+        seriesLabel.text(updateLabel(0));
+        // Signal the progress bar to move.
+        fate.progress(index => seriesPBar.progressbar({ value: index }));
     }
 });
 
