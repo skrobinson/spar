@@ -1,7 +1,7 @@
 /*
  * spar jQuery UI Widget
  *
- * A multi-round countdown timer to support in-persons exams.
+ * A multi-round countdown timer to support in-person exams.
  *
  * @updated August 28, 2018
  * @version Talc
@@ -15,19 +15,20 @@
 $.widget('scottsdalecc.spar', {
     options: {
         interval: 60,  // seconds per round (i.e. one mineral)
-        pause: 2,  // hidden delay between rounds
-        rounds: 25,  // number of countdowns to show
+        pause: 2000,  // hidden delay between rounds, in milliseconds
+        nrRounds: 25,  // number of countdowns to show
         sound: true,  // play sounds ending each round
+        timer: null,
         // Defaults for rounddown appearance
         timerOpts: {
             autostart: false,
-            fillStyle: '#FFFFFF',  // solid white interior
-            fontColor: '#000000',  // black text
-            label: ['second', 'seconds'],
-            radius: 52,
+            fillStyle: '#000000',  // solid black interior
+            fontColor: '#FFFFFF',  // white text
+            label: [],
+            radius: 240,
             smooth: true,
-            strokeStyle: '#000000',  // border color
-            strokeWidth: 5  // border width
+            strokeStyle: '#FFFFFF',  // white border
+            strokeWidth: 15  // border width
         }
     },
 
