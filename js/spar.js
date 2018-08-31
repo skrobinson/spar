@@ -97,6 +97,27 @@ $.widget('scottsdalecc.spar', {
             max: options.nrRounds,
             value: 0
         });
+        // Create a Begin-Pause-Resume button.
+        let buttonStates = [
+            {
+                text: 'Begin',
+                next: 'Pause',
+                func: timer.start.bind(timer)
+            },
+            {
+                text: 'Pause',
+                next: 'Resume',
+                func: timer.pause.bind(timer)
+            },
+            {
+                text: 'Resume',
+                next: 'Pause',
+                func: timer.resume.bind(timer)
+            }
+        ];
+        let controlButton = $('#control-button').unibutton({
+            states: buttonStates
+        });
         // Set to begin at round 0.
         seriesLabel.text(updateLabel(0));
         // Signal the progress bar to move.

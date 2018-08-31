@@ -19,6 +19,11 @@ body {
     width: 100%;
 }
 
+#control-button {
+    margin-top: 1em;
+    width: 50%;
+}
+
 #rounds {
     height: 20%;
     width: 100%;
@@ -32,6 +37,10 @@ body {
     position: absolute;
     text-align: center;
     width: 100%;
+}
+
+.ui-button-disabled {
+    opacity: .80;
 }
 
 .ui-progressbar {
