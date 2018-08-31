@@ -12,6 +12,19 @@
 
 'use strict';
 
+/* pause - resolve a Promise after a delay
+ *
+ * Use this to insert a pause in a Promise chain.
+ *
+ * @param {Number} delay - time in milliseconds to delay Promise chain
+ * @returns {Promise}
+ */
+function pause(delay) {
+    let deferred = $.Deferred();
+    setTimeout(() => deferred.resolve(), delay);
+    return deferred.promise();
+}
+
 $.widget('scottsdalecc.spar', {
     options: {
         interval: 60,  // seconds per round (i.e. one mineral)
