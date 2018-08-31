@@ -130,6 +130,14 @@ $.widget('scottsdalecc.spar', {
                                 .then(timer.start.bind(timer)));
         // Signal the progress bar to move.
         fate.progress(index => seriesPBar.progressbar({ value: index }));
+        $('body').on('keypress', function(e) {
+            if (e.key === ' ' || e.key === 'PageDown') {
+                // When spacebar or PageDown is pressed, click the unibutton.
+                // PageDown is sent by Kensington Wireless Presenter right
+                // arrow button.
+                controlButton.trigger('click');
+            }
+        });
     }
 });
 
