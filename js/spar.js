@@ -66,3 +66,50 @@ $.widget('scottsdalecc.spar', {
     _create: function() {
     }
 });
+
+/* unibutton - a multi-phase button
+ *
+ * @param {Array} states - A list of objects describing button states.  The
+ * first state listed is the first state into which the button will be placed
+ * after creation.
+ *
+ * Throws an error if no states are provided.
+ *
+ * A state object in the states list should contain the following properies:
+ *       text: current button text
+ *       next: target button text on click
+ *       func: function to call on click
+*/
+$.widget('scottsdalecc.unibutton', {
+    options: {
+        states: []
+    },
+
+    _create: function() {
+        if (this.options.states.length < 1) {
+            throw new Error('A unibutton must have at least one state.');
+        }
+        let stateTexts = $.map(this.options.states, (e, i) => e.text);
+        let oneButton = this.element;
+        // Label the button with the initial state text.
+        oneButton.button({ label: stateTexts[0] })
+        // Ready event handlers.
+        this._on(oneButton, {
+            click: function() {
+                // Get the current state object from the current label.
+                let label = oneButton.button('option', 'label') ;
+                let state = $.grep(this.options.states,
+                                      (e, i) => e.text === label)[0];
+                $.when()
+                    // Temporarily disable button to ignore clicks.
+                    .then($.fn.button.bind(oneButton, 'disable'))
+                    .then(pause.bind(null, 100))
+                    // Call the provided function for the current state.
+                    .then(state.func)
+                    // Change to next state and enable.
+                    .then($.fn.button.bind(oneButton, 'option', 'label', state.next))
+                    .then($.fn.button.bind(oneButton, 'enable'));
+            }
+        });
+    }
+});
