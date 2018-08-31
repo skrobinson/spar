@@ -13,28 +13,3 @@ body {
     position: relative;
     text-align: center;
 }
-
-/* User button font. */
-.button_font {
-    font-family: Courier;
-    font-weight: normal;
-    font-size: 10px;
-}
-
-/* Remaining rounds font. */
-.rounds_font {
-    font-family: Helvetica;
-    font-weight: bold;
-    font-size: 20px;
-}
-
-.status-block {
-    color: #00AA00;
-}
-
-/* Countdown timer very large font. */
-.timer_font {
-    font-family: Helvetica;
-    font-weight: bold;
-    font-size: 20px;  /* Should vary with size. */
-}
