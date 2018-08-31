@@ -64,6 +64,15 @@ $.widget('scottsdalecc.spar', {
     },
 
     _create: function() {
+        // Save some shorthand variable names.
+        let options = this.options;
+        let timer = this.options.timer;
+        // Fate is resolved at the end (of the progressbar count down)
+        // and notifies progress listeners about the end of each round.
+        let fate = $.Deferred();
+        let currentRound = 0;
+        // Save a partial function to return text for the progress bar.
+        let updateLabel = remainderText(options.nrRounds);
     }
 });
 
