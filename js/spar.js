@@ -128,6 +128,10 @@ $.widget('scottsdalecc.spar', {
         fate.progress(() => $.when()
                                 .then($.fn.button.bind(controlButton, 'disable'))
                                 .then(timer.stop.bind(timer))
+                                // Rejected promise skips the following
+                                // resolved callbacks.
+                                .then(() => fate.state() === 'rejected' &&
+                                                fate.promise())
                                 .then(pause.bind(null, options.pause))
                                 .then($.fn.button.bind(controlButton, 'enable'))
                                 .then(timer.start.bind(timer)));
