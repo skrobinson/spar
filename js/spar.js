@@ -120,6 +120,9 @@ $.widget('scottsdalecc.spar', {
         });
         // Set to begin at round 0.
         seriesLabel.text(updateLabel(0));
+        // Play a bell sound at the end of each round.
+        // The audio object is the first item in the jQuery object collection.
+        fate.progress(() => $('#sound-bell')[0].play());
         // Stop the timer for options.pause milliseconds after each round.
         // The hidden pause gives time for students to physically pass samples.
         fate.progress(() => $.when()
