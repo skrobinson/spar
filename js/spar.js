@@ -93,7 +93,7 @@ $.widget('scottsdalecc.spar', {
         // Create a progress bar for the entrire exam length.
         let seriesPBar = $('#rounds-counter').progressbar({
             change: () => seriesLabel.text(updateLabel(currentRound)),
-            complete: () => fate.resolve(options.nrRounds),
+            complete: () => fate.reject('complete'),
             max: options.nrRounds,
             value: 0
         });
