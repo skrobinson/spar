@@ -147,6 +147,38 @@ $.widget('scottsdalecc.spar', {
                 controlButton.trigger('click');
             }
         });
+    },
+
+    /* getParams - returns converted search parameters
+     *
+     * Values in paramString will be converted to their individual type and
+     * returned in an object which may be combined with this.options.
+     *
+     * @param {String} paramString - A URL search string to be converted.
+     * @returns {object}
+     */
+    getParams(paramString) {
+        let options = this.options;
+        // Translate a URLSearchParams object into a plain object because
+        // jQuery.each does not, yet, handle the ES2015 iterable protocol.
+        let params = {};
+        for (let p of new URLSearchParams(paramString)) {
+            params[p[0]] = p[1];
+        }
+        // Convert each String value to appropriate type.
+        $.each(params, function(name, value) {
+            if (options[name]) {
+                if (value === 'false') {
+                    // Special case for a broken JS type system.  Arghhh!
+                    value = false;
+                }
+                params[name] = options[name].constructor(value);
+            } else {
+                // Only params defined in this.options may be used in the URL.
+                throw new Error('unrecognized URL search parameter');
+            }
+        });
+        return params;
     }
 });
 
