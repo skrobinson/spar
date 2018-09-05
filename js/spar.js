@@ -65,21 +65,22 @@ $.widget('scottsdalecc.spar', {
 
     _create: function() {
         // Save some shorthand variable names.
-        let options = this.options;
+        let params = this.getParams(window.location.search);
+        let session = $.extend({}, this.options, params);
         let timer = this.options.timer;
         // Fate is resolved at the end (of the progressbar count down)
         // and notifies progress listeners about the end of each round.
         let fate = $.Deferred();
         let currentRound = 0;
         // Save a partial function to return text for the progress bar.
-        let updateLabel = remainderText(options.nrRounds);
+        let updateLabel = remainderText(session.nrRounds);
         let seriesLabel = $('#rounds-counter > .progress-label');
         // Create a countdown timer to measure time for each pair of questions.
         timer = $('#timer').rounddown(
                             $.extend(
-                                {seconds: options.interval,
+                                {seconds: session.interval,
                                  onComplete: () => fate.notify(++currentRound) },
-                                options.timerOpts
+                                session.timerOpts
                             ));
         // Start the timer to draw it on-screen, then immediately stop it.
         timer.start();
@@ -94,7 +95,7 @@ $.widget('scottsdalecc.spar', {
         let seriesPBar = $('#rounds-counter').progressbar({
             change: () => seriesLabel.text(updateLabel(currentRound)),
             complete: () => fate.reject('complete'),
-            max: options.nrRounds,
+            max: session.nrRounds,
             value: 0
         });
         // Create a Begin-Pause-Resume button.
@@ -121,11 +122,11 @@ $.widget('scottsdalecc.spar', {
         // Set to begin at round 0.
         seriesLabel.text(updateLabel(0));
         // Optionally, play a bell sound at the end of each round.
-        if (options.sound) {
+        if (session.sound) {
             // The audio object is the first item in the jQuery object collection.
             fate.progress(() => $('#sound-bell')[0].play());
         }
-        // Stop the timer for options.pause milliseconds after each round.
+        // Stop the timer for session.pause milliseconds after each round.
         // The hidden pause gives time for students to physically pass samples.
         fate.progress(() => $.when()
                                 .then($.fn.button.bind(controlButton, 'disable'))
@@ -134,7 +135,7 @@ $.widget('scottsdalecc.spar', {
                                 // resolved callbacks.
                                 .then(() => fate.state() === 'rejected' &&
                                                 fate.promise())
-                                .then(pause.bind(null, options.pause))
+                                .then(pause.bind(null, session.pause))
                                 .then($.fn.button.bind(controlButton, 'enable'))
                                 .then(timer.start.bind(timer)));
         // Signal the progress bar to move.
