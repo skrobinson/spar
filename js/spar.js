@@ -46,8 +46,8 @@ function remainderText(max) {
 $.widget('scottsdalecc.spar', {
     options: {
         interval: 60,  // seconds per round (i.e. one mineral)
-        pause: 2000,  // hidden delay between rounds, in milliseconds
         nrRounds: 25,  // number of countdowns to show
+        pause: 2000,  // hidden delay between rounds, in milliseconds
         sound: true,  // play sounds ending each round
         timer: null,
         // Defaults for rounddown appearance
