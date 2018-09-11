@@ -3,7 +3,7 @@
  *
  * A multi-round countdown timer to support in-person exams.
  *
- * @updated August 28, 2018
+ * @updated September 10, 2018
  * @version Talc
  *
  * @author Sean Robinson <sean.robinson@scottsdalecc.edu>
@@ -45,7 +45,7 @@ function remainderText(max) {
 
 $.widget('scottsdalecc.spar', {
     options: {
-        interval: 60,  // seconds per round (i.e. one mineral)
+        interval: 60000,  // milliseconds per round (i.e. one mineral)
         nrRounds: 25,  // number of countdowns to show
         pause: 2000,  // hidden delay between rounds, in milliseconds
         sound: true,  // play sounds ending each round
@@ -78,19 +78,17 @@ $.widget('scottsdalecc.spar', {
         // Create a countdown timer to measure time for each pair of questions.
         timer = $('#timer').rounddown(
                             $.extend(
-                                {seconds: session.interval,
-                                 onComplete: () => fate.notify(++currentRound) },
+                                {duration: session.interval},
                                 session.timerOpts
                             ));
-        // Start the timer to draw it on-screen, then immediately stop it.
-        timer.start();
-        timer.stop();
+        let onTime = timer.rounddown('option', 'onTime');
+        onTime[0] = () => fate.notify(++currentRound);
         // Once things settle, resize the countdown to fit screen.
         $.when(pause(10))
             .then(() => [$('#timer').parent().innerHeight(),
                          $('#timer').parent().innerWidth()])
             .then(dims => Math.min.apply(null, dims))
-            .then(minDim => timer.radius(minDim / 2.2));
+            .then(minDim => timer.rounddown('radius', minDim / 2.2));
         // Create a progress bar for the entrire exam length.
         let seriesPBar = $('#rounds-counter').progressbar({
             change: () => seriesLabel.text(updateLabel(currentRound)),
@@ -103,17 +101,17 @@ $.widget('scottsdalecc.spar', {
             {
                 text: 'Begin',
                 next: 'Pause',
-                func: timer.start.bind(timer)
+                func: timer.rounddown.bind(timer, 'start')
             },
             {
                 text: 'Pause',
                 next: 'Resume',
-                func: timer.pause.bind(timer)
+                func: timer.rounddown.bind(timer, 'pause')
             },
             {
                 text: 'Resume',
                 next: 'Pause',
-                func: timer.resume.bind(timer)
+                func: timer.rounddown.bind(timer, 'resume')
             }
         ];
         let controlButton = $('#control-button').unibutton({
@@ -130,14 +128,14 @@ $.widget('scottsdalecc.spar', {
         // The hidden pause gives time for students to physically pass samples.
         fate.progress(() => $.when()
                                 .then($.fn.button.bind(controlButton, 'disable'))
-                                .then(timer.stop.bind(timer))
+                                .then(timer.rounddown.bind(timer, 'stop'))
                                 // Rejected promise skips the following
                                 // resolved callbacks.
                                 .then(() => fate.state() === 'rejected' &&
                                                 fate.promise())
                                 .then(pause.bind(null, session.pause))
                                 .then($.fn.button.bind(controlButton, 'enable'))
-                                .then(timer.start.bind(timer)));
+                                .then(timer.rounddown.bind(timer, 'start')));
         // Signal the progress bar to move.
         fate.progress(index => seriesPBar.progressbar({ value: index }));
         $('body').on('keypress', function(e) {
