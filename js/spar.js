@@ -71,6 +71,8 @@ $.widget('scottsdalecc.spar', {
         // Fate is resolved at the end (of the progressbar count down)
         // and notifies progress listeners about the end of each round.
         let fate = $.Deferred();
+        // Tick notifies at each second for which a 'tick' should sound.
+        let tick = $.Deferred();
         let currentRound = 0;
         // Save a partial function to return text for the progress bar.
         let updateLabel = remainderText(session.nrRounds);
@@ -119,10 +121,15 @@ $.widget('scottsdalecc.spar', {
         });
         // Set to begin at round 0.
         seriesLabel.text(updateLabel(0));
-        // Optionally, play a bell sound at the end of each round.
+        // Optionally, play 3 ticks and a bell at the end of each round.
         if (session.sound) {
             // The audio object is the first item in the jQuery object collection.
             fate.progress(() => $('#sound-bell')[0].play());
+            tick.progress(() => $('#sound-tick')[0].play());
+            // Trigger 3 tick sounds before end bell.
+            for (let i of [1, 2, 3]) {
+                onTime[i] = t => tick.notify(t);
+            }
         }
         // Stop the timer for session.pause milliseconds after each round.
         // The hidden pause gives time for students to physically pass samples.
