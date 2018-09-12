@@ -74,6 +74,9 @@ $.widget('scottsdalecc.spar', {
         // Tick notifies at each second for which a 'tick' should sound.
         let tick = $.Deferred();
         let currentRound = 0;
+        // Calculate a session pause, keeping in mind the fade out and in durations.
+        session.fadeDuration = this.options.pause / 7;
+        session.pause = this.options.pause / 2 - session.fadeDuration;
         // Save a partial function to return text for the progress bar.
         let updateLabel = remainderText(session.nrRounds);
         let seriesLabel = $('#rounds-counter > .progress-label');
@@ -136,11 +139,17 @@ $.widget('scottsdalecc.spar', {
         fate.progress(() => $.when()
                                 .then($.fn.button.bind(controlButton, 'disable'))
                                 .then(timer.rounddown.bind(timer, 'stop'))
+                                .then(pause.bind(null, session.pause))
+                                .then(() => timer.fadeTo(session.fadeDuration, 0.001)
+                                                 .promise())
+                                .then(timer.rounddown.bind(timer, 'draw'))
+                                .then(() => timer.fadeTo(session.fadeDuration, 1)
+                                                 .promise())
+                                .then(pause.bind(null, session.pause))
                                 // Rejected promise skips the following
                                 // resolved callbacks.
                                 .then(() => fate.state() === 'rejected' &&
                                                 fate.promise())
-                                .then(pause.bind(null, session.pause))
                                 .then($.fn.button.bind(controlButton, 'enable'))
                                 .then(timer.rounddown.bind(timer, 'start')));
         // Signal the progress bar to move.
