@@ -49,7 +49,6 @@ $.widget('scottsdalecc.spar', {
         nrRounds: 25,  // number of countdowns to show
         pause: 2000,  // hidden delay between rounds, in milliseconds
         sound: true,  // play sounds ending each round
-        timer: null,
         // Defaults for rounddown appearance
         timerOpts: {
             autostart: false,
@@ -67,7 +66,6 @@ $.widget('scottsdalecc.spar', {
         // Save some shorthand variable names.
         let params = this.getParams(window.location.search);
         let session = $.extend({}, this.options, params);
-        let timer = this.options.timer;
         // Fate is resolved at the end (of the progressbar count down)
         // and notifies progress listeners about the end of each round.
         let fate = $.Deferred();
@@ -81,7 +79,7 @@ $.widget('scottsdalecc.spar', {
         let updateLabel = remainderText(session.nrRounds);
         let seriesLabel = $('#rounds-counter > .progress-label');
         // Create a countdown timer to measure time for each pair of questions.
-        timer = $('#timer').rounddown(
+        let timer = $('#timer').rounddown(
                             $.extend(
                                 {duration: session.interval},
                                 session.timerOpts
