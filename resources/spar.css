@@ -71,7 +71,8 @@ li.definition cite {
 
 #rounds {
     height: 20%;
-    width: 100%;
+    margin: auto 10%;
+    width: 80%;
 }
 
 #rounds-counter > .progress-label {
