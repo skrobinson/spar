@@ -79,11 +79,10 @@ $.widget('scottsdalecc.spar', {
         let updateLabel = remainderText(session.nrRounds);
         let seriesLabel = $('#rounds-counter > .progress-label');
         // Create a countdown timer to measure time for each pair of questions.
-        let timer = $('#timer').rounddown(
-                            $.extend(
-                                {duration: session.interval},
-                                session.timerOpts
-                            ));
+        let timer = $('#timer').rounddown($.extend(
+                                            {duration: session.interval},
+                                             session.timerOpts
+                                          ));
         let onTime = timer.rounddown('option', 'onTime');
         onTime[0] = () => fate.notify(++currentRound);
         // Once things settle, resize the countdown to fit screen.
