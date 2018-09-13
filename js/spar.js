@@ -73,8 +73,8 @@ $.widget('scottsdalecc.spar', {
         let tick = $.Deferred();
         let currentRound = 0;
         // Calculate a session pause, keeping in mind the fade out and in durations.
-        session.fadeDuration = this.options.pause / 7;
-        session.pause = this.options.pause / 2 - session.fadeDuration;
+        session.fadeDuration = session.pause / 7;
+        session.pause = session.pause / 2 - session.fadeDuration;
         // Save a partial function to return text for the progress bar.
         let updateLabel = remainderText(session.nrRounds);
         let seriesLabel = $('#rounds-counter > .progress-label');
