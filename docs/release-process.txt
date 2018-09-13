@@ -1,0 +1,26 @@
+---------------
+Release Process
+---------------
+
+This documents the steps to deliver working release versions of Spar.
+
+
+=======================
+Ready Files for Release
+=======================
+
+1) finalize changes to the git repository master branch
+2) git checkout release
+3) git merge master
+4) clean up conflicts and commit the result
+5) the release branch now has the release version of files
+
+
+=======================
+Generate a Release
+==================
+
+The bin/make-release.sh script will build a directory with all the files
+needed for a public release of the Spar app and support files.  The
+directory is under release and is named spar-CURRENTDATE.  This directory
+can be archived and sent to IT for placement on the web server.
