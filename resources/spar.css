@@ -37,17 +37,20 @@ div.def-list sub {
 div.instructions {
     opacity: 0.1;
     margin: 6em auto;
+    text-align: left;
     transition: opacity 0.5s;
+    width: 50%;
 }
 
 div.instructions:hover {
     opacity: 1;
 }
 
-div.instructions ul {
-    margin: auto 30%;
-    text-align: left;
-    width: 40%;
+div.instructions h2 {
+    text-align: center;
+}
+
+div.instructions p, div.instructions ul {
 }
 
 div.navigation a {
