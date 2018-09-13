@@ -3,7 +3,7 @@
  *
  * A multi-round countdown timer to support in-person exams.
  *
- * @updated September 10, 2018
+ * @updated September 13, 2018
  * @version Talc
  *
  * @author Sean Robinson <sean.robinson@scottsdalecc.edu>
@@ -55,7 +55,7 @@ $.widget('scottsdalecc.spar', {
             fillStyle: '#000000',  // solid black interior
             fontColor: '#FFFFFF',  // white text
             label: [],
-            radius: 240,
+            radius: 40,
             smooth: true,
             strokeStyle: '#FFFFFF',  // white border
             strokeWidth: 15  // border width
@@ -85,12 +85,6 @@ $.widget('scottsdalecc.spar', {
                                           ));
         let onTime = timer.rounddown('option', 'onTime');
         onTime[0] = () => fate.notify(++currentRound);
-        // Once things settle, resize the countdown to fit screen.
-        $.when(pause(10))
-            .then(() => [$('#timer').parent().innerHeight(),
-                         $('#timer').parent().innerWidth()])
-            .then(dims => Math.min.apply(null, dims))
-            .then(minDim => timer.rounddown('radius', minDim / 2.2));
         // Create a progress bar for the entrire exam length.
         let seriesPBar = $('#rounds-counter').progressbar({
             change: () => seriesLabel.text(updateLabel(currentRound)),
@@ -119,6 +113,20 @@ $.widget('scottsdalecc.spar', {
         let controlButton = $('#control-button').unibutton({
             states: buttonStates
         });
+        // Once things settle, resize the countdown to fit screen.
+        $.when(pause(10))
+            .then(() => $(window).height() > $(window).width())
+            // Promise value is boolean; true for portrait mode.
+            .then(vertical => vertical && $(window).width())
+            // Promise value is false or actual width
+            .then(width => width || $(window).height())
+            // Promise value is the constraining dimension measurement.
+            .then(dim => dim === $(window).width() && dim ||
+                            dim - $('#rounds').height() - $('#controls').height())
+            // Promise value is the optimal initial canvas height.
+            // Remove border width (2x) and cut canvas height (diameter) in half.
+            .then(r => timer.rounddown('radius',
+                                       (r - session.timerOpts.strokeWidth * 2) / 2));
         // Set to begin at round 0.
         seriesLabel.text(updateLabel(0));
         // Optionally, play 3 ticks and a bell at the end of each round.
