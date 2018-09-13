@@ -14,9 +14,17 @@ body {
     text-align: center;
 }
 
+#content {
+    align-items: center;
+    display: flex;
+    flex-flow: column nowrap;
+    height: 100%;
+    justify-content: flex-end;
+}
+
 #controls {
-    height: 10%;
     width: 100%;
+    flex: 1 1 10%;
 }
 
 #control-button {
@@ -81,8 +89,8 @@ li.definition cite {
 }
 
 #rounds {
-    height: 20%;
-    margin: auto 10%;
+    flex: 2 2 20%;
+    margin: auto;
     width: 80%;
 }
 
@@ -94,6 +102,10 @@ li.definition cite {
     position: absolute;
     text-align: center;
     width: 100%;
+}
+
+#timer {
+    flex: 7 7 70%;
 }
 
 .ui-button-disabled {
