@@ -1,7 +1,7 @@
 /*
     spar.css - Spar app CSS
 
-    Copyright 2018 by Scottsdale Community College
+    Copyright 2018,2019 by Scottsdale Community College
     written by Sean Robinson <sean.robinson@scottsdalecc.edu>
 */
 
@@ -10,6 +10,7 @@ body {
     color: #FFFFFF;
     font-size: calc(0.5em + 1vmin);
     margin: 0px;
+    overflow: hidden;
     position: relative;
     text-align: center;
 }
