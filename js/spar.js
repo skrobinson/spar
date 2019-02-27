@@ -3,11 +3,11 @@
  *
  * A multi-round countdown timer to support in-person exams.
  *
- * @updated September 13, 2018
- * @version Talc
+ * @updated February 27, 2019
+ * @version Gypsum
  *
  * @author Sean Robinson <sean.robinson@scottsdalecc.edu>
- * @copyright (c) 2018 Scottsdale Community College
+ * @copyright (c) 2018,2019 Scottsdale Community College
  */
 
 'use strict';
@@ -111,7 +111,7 @@ $.widget('scottsdalecc.spar', {
         let controlButton = $('#control-button').unibutton({
             states: buttonStates
         });
-        // Once things settle, resize the countdown to fit screen.
+        // Once things settle, resize the countdown to fit the screen.
         $.when(pause(10))
             .then(() => $(window).height() > $(window).width())
             // Promise value is boolean; true for portrait mode.
