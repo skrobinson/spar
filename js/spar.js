@@ -83,8 +83,6 @@ $.widget('scottsdalecc.spar', {
                                             {duration: session.interval},
                                              session.timerOpts
                                           ));
-        let onTime = timer.rounddown('option', 'onTime');
-        onTime[0] = () => fate.notify(++currentRound);
         // Create a progress bar for the entrire exam length.
         let seriesPBar = $('#rounds-counter').progressbar({
             change: () => seriesLabel.text(updateLabel(currentRound)),
@@ -129,6 +127,9 @@ $.widget('scottsdalecc.spar', {
                                        (r - session.timerOpts.strokeWidth * 2) / 2));
         // Set to begin at round 0.
         seriesLabel.text(updateLabel(0));
+        // Notify fate progress listeners about round number increments.
+        let onTime = timer.rounddown('option', 'onTime');
+        onTime[0] = () => fate.notify(++currentRound);
         // Optionally, play 3 ticks and a bell at the end of each round.
         if (session.sound) {
             // The audio object is the first item in the jQuery object collection.
