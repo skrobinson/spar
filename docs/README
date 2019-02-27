@@ -4,6 +4,3 @@ Spar
 
 Spar is an in-browser, Javascript-based, multi-round countdown timer.
 Its main purpose is to support SCC GLG103 mineral exams.
-
-Spar is the successor to the quotidian (Python2/tkinter) desktop
-application.
