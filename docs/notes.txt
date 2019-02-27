@@ -8,7 +8,7 @@ Development Environment
 Names
 -----
 
-Talc
+Talc - released Sept. 18, 2018
 Gypsum
 Calcite
 Fluorite
