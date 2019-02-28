@@ -12,6 +12,55 @@
 
 'use strict';
 
+/* longtailThrottle - time-based throttle function with a tail extender
+ *
+ * 'responder' events are triggered once per 'interval' after the first
+ * 'inciter' event.  'responder' events stop triggering when at least 'tail'
+ * number of 'responder' events have been emitted since the most recent
+ * 'inciter' event.
+ *
+ * Sample:
+ *   time (ms)  000 010 020 030 100 150 200 250 300 350 400
+ *     inciter   R   R       R       R
+ *   responder                   T       T       T       T
+ *               R = receive     T = trigger
+ *
+ * @param {String} inciter - name of event listened for
+ * @param {String} responder - name of event to emit
+ * @param {Number} interval - Time between responder event calls.  Defaults
+ * to 100 milliseconds.
+ * @param {Number} tail - Number of times to fire responder after last inciter
+ * event.  Defaults to 3 times.
+ */
+function longtailThrottle(inciter, responder, interval, tail) {
+    if (interval === undefined || interval === null) {
+        interval = 100;
+    }
+    if (tail === undefined || tail === null) {
+        tail = 3;
+    }
+    var intervalTimer = null;
+    var tailCounter = tail;
+    $(window).on(inciter, function() {
+        if (intervalTimer === null) {
+            // Set up a new interval to trigger child events.
+            intervalTimer = setInterval(function() {
+                if (tailCounter < 1) {
+                    // Interval has triggered tailCounter times, so stop.
+                    clearInterval(intervalTimer);
+                    intervalTimer = null;
+                    tailCounter = tail;
+                } else {
+                    $(window).trigger(responder);
+                    tailCounter--;
+                }
+            }, interval);
+        } else {
+            tailCounter = tail;
+        }
+    });
+}
+
 /* pause - resolve a Promise after a delay
  *
  * Use this to insert a pause in a Promise chain.
