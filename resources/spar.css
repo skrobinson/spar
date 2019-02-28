@@ -34,13 +34,14 @@ body {
 }
 
 .def-list {
-    margin: 4em 30% 4em 30%;
+    margin: 4em auto 4em 30%;
     text-align: left;
-    width: 40%;
 }
 
 .def-list sub {
-    padding-left: 20em;
+    position: absolute;
+    right: 25%;
+    white-space: nowrap;
 }
 
 .instructions {
