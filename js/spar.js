@@ -121,10 +121,11 @@ $.widget('scottsdalecc.spar', {
             // Promise value is the constraining dimension measurement.
             .then(dim => dim === $(window).width() && dim ||
                             dim - $('#rounds').height() - $('#controls').height())
-            // Promise value is the optimal initial canvas height.
-            // Remove border width (2x) and cut canvas height (diameter) in half.
-            .then(r => timer.rounddown('radius',
-                                       (r - session.timerOpts.strokeWidth * 2) / 2));
+            // Promise value is the initial canvas height.
+            // Remove border width (2x) and shrink to 95%.
+            .then(h => (h - session.timerOpts.strokeWidth * 2) * 0.95)
+            // Promise value is optimal timer diameter.
+            .then(diameter => timer.rounddown('radius', diameter / 2 ));
         // Set to begin at round 0.
         seriesLabel.text(updateLabel(0));
         // Notify fate progress listeners about round number increments.
