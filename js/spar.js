@@ -160,21 +160,6 @@ $.widget('scottsdalecc.spar', {
         let controlButton = $('#control-button').unibutton({
             states: buttonStates
         });
-        // Once things settle, resize the countdown to fit the screen.
-        $.when(pause(10))
-            .then(() => $(window).height() > $(window).width())
-            // Promise value is boolean; true for portrait mode.
-            .then(vertical => vertical && $(window).width())
-            // Promise value is false or actual width
-            .then(width => width || $(window).height())
-            // Promise value is the constraining dimension measurement.
-            .then(dim => dim === $(window).width() && dim ||
-                            dim - $('#rounds').height() - $('#controls').height())
-            // Promise value is the initial canvas height.
-            // Remove border width (2x) and shrink to 95%.
-            .then(h => (h - session.timerOpts.strokeWidth * 2) * 0.95)
-            // Promise value is optimal timer diameter.
-            .then(diameter => timer.rounddown('radius', diameter / 2 ));
         // Set to begin at round 0.
         seriesLabel.text(updateLabel(0));
         // Notify fate progress listeners about round number increments.
@@ -218,6 +203,26 @@ $.widget('scottsdalecc.spar', {
                 controlButton.trigger('click');
             }
         });
+        // Re-emit resize event as a custom event, with extended throttling.
+        longtailThrottle('resize', 'spar-resize');
+        // Resize rounddown timer to fit window.
+        $(window).on('spar-resize', function() {
+            return $.when($(window).height() > $(window).width())
+                // Promise value is boolean; true for portrait mode.
+                .then(vertical => vertical && $(window).width())
+                // Promise value is false or actual width
+                .then(width => width || $(window).height())
+                // Promise value is the constraining dimension measurement.
+                .then(dim => dim === $(window).width() && dim ||
+                                dim - $('#rounds').height() - $('#controls').height())
+                // Promise value is the initial canvas height.
+                // Remove border width (2x) and shrink to 95%.
+                .then(h => (h - session.timerOpts.strokeWidth * 2) * 0.95)
+                // Promise value is optimal timer diameter.
+                .then(diameter => timer.rounddown('radius', diameter / 2 ));
+        });
+        // Once things settle, resize the countdown to fit the screen.
+        $.when(pause(10)).then(() => $(window).trigger('resize'));
     },
 
     /* getParams - returns converted search parameters
