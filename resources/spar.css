@@ -78,6 +78,7 @@ body {
 
 .navigation span {
     margin: 0 8em;
+    white-space: nowrap;
 }
 
 .definition {
