@@ -33,17 +33,17 @@ body {
     width: 50%;
 }
 
-div.def-list {
+.def-list {
     margin: 4em 30% 4em 30%;
     text-align: left;
     width: 40%;
 }
 
-div.def-list sub {
+.def-list sub {
     padding-left: 20em;
 }
 
-div.instructions {
+.instructions {
     opacity: 0.2;
     margin: 6em auto;
     text-align: left;
@@ -52,39 +52,39 @@ div.instructions {
 }
 
 /* Hover on instructions changes opacity for all children. */
-div.instructions:hover,
-div.instructions:hover h2,
-div.instructions:hover p,
-div.instructions:hover ul {
+.instructions:hover,
+.instructions:hover h2,
+.instructions:hover p,
+.instructions:hover ul {
     opacity: 1;
 }
 
 /* Header is always as opaque as parent. */
-div.instructions h2 {
+.instructions h2 {
     opacity: 1;
     text-align: center;
 }
 
 /* Non-header children are barely visible without hover. */
-div.instructions p, div.instructions ul {
+.instructions p, .instructions ul {
     opacity: 0.2;
 }
 
-div.navigation a {
+.navigation a {
     color: #FFFFFF;
     font-size: calc(2em + 1vmin);
     text-decoration: none;
 }
 
-div.navigation span {
+.navigation span {
     margin: 0 8em;
 }
 
-li.definition {
+.definition {
     font-size: 1.2em;
 }
 
-li.definition cite {
+.definition cite {
     font-size: 0.6em;
     vertical-align: super;
 }
