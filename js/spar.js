@@ -170,8 +170,8 @@ $.widget('scottsdalecc.spar', {
             // The audio object is the first item in the jQuery object collection.
             fate.progress(() => $('#sound-bell')[0].play());
             tick.progress(() => $('#sound-tick')[0].play());
-            // Trigger 3 tick sounds before end bell.
-            for (let i of [1, 2, 3]) {
+            // Trigger 2 tick sounds before end bell.
+            for (let i of [1, 2]) {
                 onTime[i] = t => tick.notify(t);
             }
         }
