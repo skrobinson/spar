@@ -251,7 +251,7 @@ $.widget('scottsdalecc.spar', {
                 params[name] = options[name].constructor(value);
             } else {
                 // Only params defined in this.options may be used in the URL.
-                throw new Error('unrecognized URL search parameter');
+                console.warn('unrecognized URL search parameter:', name);
             }
         });
         return params;
