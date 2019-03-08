@@ -288,7 +288,7 @@ $.widget('scottsdalecc.unibutton', {
         this._on(oneButton, {
             click: function() {
                 // Get the current state object from the current label.
-                let label = oneButton.button('option', 'label') ;
+                let label = oneButton.button('option', 'label');
                 let state = $.grep(this.options.states,
                                       (e, i) => e.text === label)[0];
                 $.when()
