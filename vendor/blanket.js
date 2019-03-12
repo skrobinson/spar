@@ -4338,7 +4338,7 @@ var parseAndModify = (inBrowser ? window.falafel : require("falafel"));
         ignoreScriptError: false,
         existingRequireJS:false,
         autoStart: false,
-        timeout: 180,
+        timeout: 1000,
         ignoreCors: false,
         branchTracking: false,
         sourceURL: false,
