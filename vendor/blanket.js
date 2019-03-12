@@ -1,4 +1,4 @@
-/*! blanket - v1.2.1 */
+/*! blanket - v1.2.1+ */
 
 if (typeof QUnit !== 'undefined'){ QUnit.config.autostart = false; }
 (function(define){
@@ -2072,7 +2072,7 @@ var defaultOptions = {
   // be either 3, or 5, or 6. This influences support for strict
   // mode, the set of reserved words, support for getters and
   // setters and other features.
-  ecmaVersion: 5,
+  ecmaVersion: 6,
   // Source type ("script" or "module") for different semantics
   sourceType: "script",
   // `onInsertedSemicolon` can be a callback that will be called
@@ -4328,7 +4328,8 @@ var parseAndModify = (inBrowser ? window.falafel : require("falafel"));
     ],
     __blanket,
     copynumber = Math.floor(Math.random()*1000),
-    coverageInfo = {},options = {
+    coverageInfo = {},
+    options = {
         reporter: null,
         adapter:null,
         filter: null,
@@ -4347,7 +4348,7 @@ var parseAndModify = (inBrowser ? window.falafel : require("falafel"));
         commonJS:false,
         instrumentCache:false,
         modulePattern: null,
-        ecmaVersion: 5
+        ecmaVersion: 6
     };
 
     if (inBrowser && typeof window.blanket !== 'undefined'){
