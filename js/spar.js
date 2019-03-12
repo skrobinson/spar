@@ -171,7 +171,7 @@ $.widget('scottsdalecc.spar', {
             fate.progress(() => $('#sound-bell')[0].play());
             tick.progress(() => $('#sound-tick')[0].play());
             // Trigger 2 tick sounds before end bell.
-            for (let i of [1, 2]) {
+            for (let i in [1, 2]) {
                 onTime[i] = t => tick.notify(t);
             }
         }
@@ -238,7 +238,7 @@ $.widget('scottsdalecc.spar', {
         // Translate a URLSearchParams object into a plain object because
         // jQuery.each does not, yet, handle the ES2015 iterable protocol.
         let params = {};
-        for (let p of new URLSearchParams(paramString)) {
+        for (let p in new URLSearchParams(paramString)) {
             params[p[0]] = p[1];
         }
         // Convert each String value to appropriate type.
