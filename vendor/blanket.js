@@ -4972,17 +4972,6 @@ blanket.defaultReporter = function(coverage){
         el.appendChild(dom);
     };
 
-    function escapeInvalidXmlChars(str) {
-        return str.replace(/\&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/\>/g, "&gt;")
-            .replace(/\"/g, "&quot;")
-            .replace(/\'/g, "&apos;")
-            .replace(/`/g, "&grave;")
-            .replace(/[$]/g, "&dollar;")
-            .replace(/&/g, "&amp;");
-    }
-
     function isBranchFollowed(data,bool){
         var mode = bool ? 0 : 1;
         if (typeof data === 'undefined' ||
@@ -5001,30 +4990,30 @@ blanket.defaultReporter = function(coverage){
       if (branchStack.length > 0){
         newsrc += "<span class='" + (isBranchFollowed(branchStack[0][1],branchStack[0][1].consequent === branchStack[0][0]) ? 'branchOkay' : 'branchWarning') + "'>";
         if (branchStack[0][0].end.line === lineNum){
-          newsrc += escapeInvalidXmlChars(src.slice(0,branchStack[0][0].end.column)) + "</span>";
+          newsrc += src.slice(0,branchStack[0][0].end.column) + "</span>";
           src = src.slice(branchStack[0][0].end.column);
           branchStack.shift();
           if (branchStack.length > 0){
             newsrc += "<span class='" + (isBranchFollowed(branchStack[0][1],false) ? 'branchOkay' : 'branchWarning') + "'>";
             if (branchStack[0][0].end.line === lineNum){
-              newsrc += escapeInvalidXmlChars(src.slice(0,branchStack[0][0].end.column)) + "</span>";
+              newsrc += src.slice(0,branchStack[0][0].end.column) + "</span>";
               src = src.slice(branchStack[0][0].end.column);
               branchStack.shift();
               if (!cols){
-                return {src: newsrc + escapeInvalidXmlChars(src) ,cols:cols};
+                return {src: newsrc + src ,cols:cols};
               }
             }
             else if (!cols){
-              return {src: newsrc + escapeInvalidXmlChars(src) + "</span>",cols:cols};
+              return {src: newsrc + src + "</span>",cols:cols};
             }
             else{
               postfix = "</span>";
             }
           }else if (!cols){
-            return {src: newsrc + escapeInvalidXmlChars(src) ,cols:cols};
+            return {src: newsrc + src ,cols:cols};
           }
         }else if(!cols){
-          return {src: newsrc + escapeInvalidXmlChars(src) + "</span>",cols:cols};
+          return {src: newsrc + src + "</span>",cols:cols};
         }else{
           postfix = "</span>";
         }
@@ -5036,10 +5025,10 @@ blanket.defaultReporter = function(coverage){
       if (cons.start.line > lineNum){
         branchStack.unshift([thisline.alternate,thisline]);
         branchStack.unshift([cons,thisline]);
-        src = escapeInvalidXmlChars(src);
+        src = src;
       }else{
         var style = "<span class='" + (isBranchFollowed(thisline,true) ? 'branchOkay' : 'branchWarning') + "'>";
-        newsrc += escapeInvalidXmlChars(src.slice(0,cons.start.column-offset)) + style;
+        newsrc += src.slice(0,cons.start.column-offset) + style;
         
         if (cols.length > colsIndex+1 &&
           cols[colsIndex+1].consequent.start.line === lineNum &&
@@ -5051,16 +5040,16 @@ blanket.defaultReporter = function(coverage){
           cols[colsIndex+1] = cols[colsIndex+2];
           cols.length--;
         }else{
-          newsrc += escapeInvalidXmlChars(src.slice(cons.start.column-offset,cons.end.column-offset));
+          newsrc += src.slice(cons.start.column-offset,cons.end.column-offset);
         }
         newsrc += "</span>";
 
         var alt = thisline.alternate;
         if (alt.start.line > lineNum){
-          newsrc += escapeInvalidXmlChars(src.slice(cons.end.column-offset));
+          newsrc += src.slice(cons.end.column-offset);
           branchStack.unshift([alt,thisline]);
         }else{
-          newsrc += escapeInvalidXmlChars(src.slice(cons.end.column-offset,alt.start.column-offset));
+          newsrc += src.slice(cons.end.column-offset,alt.start.column-offset);
           style = "<span class='" + (isBranchFollowed(thisline,false) ? 'branchOkay' : 'branchWarning') + "'>";
           newsrc +=  style;
           if (cols.length > colsIndex+1 &&
@@ -5073,10 +5062,10 @@ blanket.defaultReporter = function(coverage){
             cols[colsIndex+1] = cols[colsIndex+2];
             cols.length--;
           }else{
-            newsrc += escapeInvalidXmlChars(src.slice(alt.start.column-offset,alt.end.column-offset));
+            newsrc += src.slice(alt.start.column-offset,alt.end.column-offset);
           }
           newsrc += "</span>";
-          newsrc += escapeInvalidXmlChars(src.slice(alt.end.column-offset));
+          newsrc += src.slice(alt.end.column-offset);
           src = newsrc;
         }
       }
@@ -5136,10 +5125,10 @@ blanket.defaultReporter = function(coverage){
                 }else if (branchStack.length){
                   src = branchReport(0,src,null,0,i+1).src;
                 }else{
-                  src = escapeInvalidXmlChars(src);
+                  src = src;
                 }
               }else{
-                src = escapeInvalidXmlChars(src);
+                src = src;
               }
               var lineClass="";
               if(statsForFile[i+1]) {
