@@ -171,7 +171,7 @@ $.widget('scottsdalecc.spar', {
             fate.progress(() => $('#sound-bell')[0].play());
             tick.progress(() => $('#sound-tick')[0].play());
             // Trigger 2 tick sounds before end bell.
-            for (let i in [1, 2]) {
+            for (let i = 1; i < 2; i++) {
                 onTime[i] = t => tick.notify(t);
             }
         }
@@ -238,12 +238,13 @@ $.widget('scottsdalecc.spar', {
         // Translate a URLSearchParams object into a plain object because
         // jQuery.each does not, yet, handle the ES2015 iterable protocol.
         let params = {};
-        for (let p in new URLSearchParams(paramString)) {
-            params[p[0]] = p[1];
-        }
+        let searchParams = new URLSearchParams(paramString);
+        searchParams.forEach(function(value, key) {
+            params[key] = value;
+        });
         // Convert each String value to appropriate type.
         $.each(params, function(name, value) {
-            if (options[name]) {
+            if (options[name] !== undefined) {
                 if (value === 'false') {
                     // Special case for a broken JS type system.  Arghhh!
                     value = false;
@@ -252,6 +253,7 @@ $.widget('scottsdalecc.spar', {
             } else {
                 // Only params defined in this.options may be used in the URL.
                 console.warn('unrecognized URL search parameter:', name);
+                delete params[name];
             }
         });
         return params;
