@@ -55,19 +55,19 @@ QUnit.test('click between states', function(assert) {
     assert.strictEqual(clickCount, 0, 'before first click');
     $('#target').trigger('click');
     $.when()
-        .then(pause.bind(null, 300))
+        .then(pause(300))
         .then(function() {
             assert.strictEqual(clickCount, 1, 'after one click');
             done();
             $('#target').trigger('click');
         })
-        .then(pause.bind(null, 300))
+        .then(pause(300))
         .then(function() {
             assert.strictEqual(clickCount, 2, 'after two clicks');
             done();
             $('#target').trigger('click');
         })
-        .then(pause.bind(null, 300))
+        .then(pause(300))
         .then(function() {
             assert.strictEqual(clickCount, 3, 'after three clicks');
             done();

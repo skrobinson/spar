@@ -61,17 +61,18 @@ function longtailThrottle(inciter, responder, interval, tail) {
     });
 }
 
-/* pause - resolve a Promise after a delay
+/* pause - delay a Promise chain
  *
- * Use this to insert a pause in a Promise chain.
+ * Use this to insert a pause in a Promise chain, passing the fulfillment
+ * value on to following clauses.
  *
  * @param {Number} delay - time in milliseconds to delay Promise chain
  * @returns {Promise}
  */
 function pause(delay) {
-    let deferred = $.Deferred();
-    setTimeout(() => deferred.resolve(), delay);
-    return deferred.promise();
+    return value => $.Deferred(
+                        dfd => setTimeout(() => dfd.resolve(value), delay)
+                    ).promise();
 }
 
 /* remainderText - return a function to make new label text
@@ -180,13 +181,13 @@ $.widget('scottsdalecc.spar', {
         fate.progress(() => $.when()
                                 .then($.fn.button.bind(controlButton, 'disable'))
                                 .then(timer.rounddown.bind(timer, 'stop'))
-                                .then(pause.bind(null, session.pause))
+                                .then(pause(session.pause))
                                 .then(() => timer.fadeTo(session.fadeDuration, 0.001)
                                                  .promise())
                                 .then(timer.rounddown.bind(timer, 'draw'))
                                 .then(() => timer.fadeTo(session.fadeDuration, 1)
                                                  .promise())
-                                .then(pause.bind(null, session.pause))
+                                .then(pause(session.pause))
                                 // Rejected promise skips the following
                                 // resolved callbacks.
                                 .then(() => fate.state() === 'rejected' &&
@@ -296,7 +297,7 @@ $.widget('scottsdalecc.unibutton', {
                 $.when()
                     // Temporarily disable button to ignore clicks.
                     .then($.fn.button.bind(oneButton, 'disable'))
-                    .then(pause.bind(null, 100))
+                    .then(pause(100))
                     // Call the provided function for the current state.
                     .then(state.func)
                     // Change to next state and enable.

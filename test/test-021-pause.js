@@ -14,14 +14,24 @@ QUnit.module('pause in a Promise chain');
 
 QUnit.test('quickly resolved', async assert => {
     assert.expect(1);
-    let promise = pause(0);
-    await promise;
-    assert.equal(promise.state(), 'resolved', 'Promise resolved');
+    let done = assert.async();
+    let value = 'SCC';
+    $.when(value)
+        .then(pause(0))
+        .then(function(newValue) {
+            assert.equal(newValue, value, 'Promise resolved with value');
+            done();
+        });
 });
 
 QUnit.test('slowly resolved', async assert => {
     assert.expect(1);
-    let promise = pause(100);
-    await promise;
-    assert.equal(promise.state(), 'resolved', 'Promise resolved');
+    let done = assert.async();
+    let value = 'SCC';
+    $.when(value)
+        .then(pause(100))
+        .then(function(newValue) {
+            assert.equal(newValue, value, 'Promise resolved with value');
+            done();
+        });
 });
