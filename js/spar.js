@@ -32,13 +32,7 @@
  * @param {Number} tail - Number of times to fire responder after last inciter
  * event.  Defaults to 3 times.
  */
-function longtailThrottle(inciter, responder, interval, tail) {
-    if (interval === undefined || interval === null) {
-        interval = 100;
-    }
-    if (tail === undefined || tail === null) {
-        tail = 3;
-    }
+function longtailThrottle(inciter, responder, interval = 100, tail = 3) {
     var intervalTimer = null;
     var tailCounter = tail;
     $(window).on(inciter, function() {
