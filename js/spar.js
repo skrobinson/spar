@@ -12,6 +12,11 @@
 
 'use strict';
 
+// Add "constants" to improve readability.
+// Leave as var, not const, until better tooling support.
+var SPACEBAR = 32;
+var PAGEDOWN = 34;
+
 /* longtailThrottle - time-based throttle function with a tail extender
  *
  * 'responder' events are triggered once per 'interval' after the first
@@ -191,7 +196,7 @@ $.widget('scottsdalecc.spar', {
         // Signal the progress bar to move.
         fate.progress(index => seriesPBar.progressbar({ value: index }));
         $('body').on('keypress', function(e) {
-            if (e.key === ' ' || e.key === 'PageDown') {
+            if (e.keyCode === SPACEBAR || e.keyCode === PAGEDOWN) {
                 // When spacebar or PageDown is pressed, click the unibutton.
                 // PageDown is sent by Kensington Wireless Presenter right
                 // arrow button.
