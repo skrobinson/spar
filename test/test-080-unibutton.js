@@ -9,7 +9,7 @@
 // QUnit.config.reorder = false;
 
 
-QUnit.module('unibutton to start, pause, and resume');
+QUnit.module('unibutton for state changes');
 
 
 QUnit.test('create', function(assert) {
