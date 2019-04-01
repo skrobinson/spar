@@ -190,7 +190,7 @@ $.widget('scottsdalecc.spar', {
                                 .then(timer.rounddown.bind(timer, 'start')));
         // Signal the progress bar to move.
         fate.progress(index => seriesPBar.progressbar({ value: index }));
-        $('body').on('keypress', function(e) {
+        $('body').on('keydown keypress', function(e) {
             if (e.keyCode === $.ui.keyCode.SPACE ||
                 e.keyCode === $.ui.keyCode.PAGE_DOWN) {
                 // When spacebar or PageDown is pressed, click the unibutton.
