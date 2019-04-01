@@ -160,7 +160,7 @@ $.widget('scottsdalecc.spar', {
         // Notify fate progress listeners about round number increments.
         let onTime = timer.rounddown('option', 'onTime');
         onTime[0] = () => fate.notify(++currentRound);
-        // Optionally, play 3 ticks and a bell at the end of each round.
+        // Optionally, play 2 ticks and a bell at the end of each round.
         if (session.sound) {
             // The audio object is the first item in the jQuery object collection.
             fate.progress(() => $('#sound-bell')[0].play());
