@@ -166,7 +166,7 @@ $.widget('scottsdalecc.spar', {
             fate.progress(() => $('#sound-bell')[0].play());
             tick.progress(() => $('#sound-tick')[0].play());
             // Trigger 2 tick sounds before end bell.
-            for (let i = 1; i < 2; i++) {
+            for (let i = 1; i < 3; i++) {
                 onTime[i] = t => tick.notify(t);
             }
         }
