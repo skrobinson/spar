@@ -83,8 +83,9 @@ function pause(delay) {
  * @returns {String}
  */
 function remainderText(max) {
-    let labelEnd = ' rounds remaining';
-    return (current) => (max - current) + labelEnd;
+    // Think of the following Array as Boolean indexed.
+    let labelEnds = [' rounds remaining', ' round remaining'];
+    return (current) => (max - current) + labelEnds[Number(max - current == 1)];
 }
 
 $.widget('scottsdalecc.spar', {

@@ -20,10 +20,13 @@ QUnit.test('usual labels', function(assert) {
     assert.equal(label(25), '0 rounds remaining', 'round completing');
 });
 
-QUnit.skip('wrong suffix for singular round', function(assert) {
-    assert.expect(1);
+QUnit.test('singular suffix for singular round', function(assert) {
+    assert.expect(4);
     let label = remainderText(25);
+    assert.equal(label(22), '3 rounds remaining', 'multiple remaining rounds');
+    assert.equal(label(23), '2 rounds remaining', 'multiple remaining rounds');
     assert.equal(label(24), '1 round remaining', 'singular remaining round');
+    assert.equal(label(25), '0 rounds remaining', 'no remaining rounds');
 });
 
 QUnit.test('differing labels', function(assert) {
