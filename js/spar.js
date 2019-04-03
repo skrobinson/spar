@@ -3,7 +3,7 @@
  *
  * A multi-round countdown timer to support in-person exams.
  *
- * @updated February 27, 2019
+ * @updated April 3, 2019
  * @version Gypsum
  *
  * @author Sean Robinson <sean.robinson@scottsdalecc.edu>
@@ -162,9 +162,32 @@ $.widget('scottsdalecc.spar', {
         onTime[0] = () => fate.notify(++currentRound);
         // Optionally, play 2 ticks and a bell at the end of each round.
         if (session.sound) {
-            // The audio object is the first item in the jQuery object collection.
-            fate.progress(() => $('#sound-bell')[0].play());
-            tick.progress(() => $('#sound-tick')[0].play());
+            let soundBell = new Wad({
+                source: 'sine',
+                pitch: 'B3',
+                volume: 0.8,
+                env: {
+                    attack: 0.1,
+                    decay: 0.1,
+                    hold: 0.1,
+                    release: 0.1,
+                    sustain: 0.2
+                }
+            });
+            let soundTick = new Wad({
+                source: 'sine',
+                pitch: 'B4',
+                volume: 0.6,
+                env: {
+                    attack: 0.1,
+                    decay: 0.05,
+                    hold: 0.05,
+                    release: 0.1,
+                    sustain: 0.0
+                }
+            });
+            fate.progress(() => soundBell.play());
+            tick.progress(() => soundTick.play());
             // Trigger 2 tick sounds before end bell.
             for (let i = 1; i < 3; i++) {
                 onTime[i] = t => tick.notify(t);
