@@ -9,7 +9,7 @@ Names
 -----
 
 Talc - released Sept. 18, 2018
-Gypsum
+Gypsum - released Apr. 10, 2019
 Calcite
 Fluorite
 Apatite
