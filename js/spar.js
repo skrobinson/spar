@@ -3,8 +3,8 @@
  *
  * A multi-round countdown timer.
  *
- * @updated April 3, 2019
- * @version Gypsum
+ * @updated September 9, 2021
+ * @version Calcite
  *
  * @author Sean Robinson <sean.robinson@scottsdalecc.edu>
  * @copyright (c) 2018,2019 Scottsdale Community College
