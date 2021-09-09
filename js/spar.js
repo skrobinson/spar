@@ -1,7 +1,7 @@
 /*
  * spar jQuery UI Widget
  *
- * A multi-round countdown timer to support in-person exams.
+ * A multi-round countdown timer.
  *
  * @updated April 3, 2019
  * @version Gypsum
