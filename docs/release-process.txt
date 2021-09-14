@@ -9,9 +9,9 @@ This documents the steps to deliver working release versions of Spar.
 Ready Files for Release
 =======================
 
-1) finalize changes to the git repository master branch
+1) finalize changes to the git repository main branch
 2) git checkout release
-3) git merge master
+3) git merge main
 4) clean up conflicts and commit the result
 5) the release branch now has the release version of files
 
